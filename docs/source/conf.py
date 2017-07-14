@@ -85,7 +85,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'pyramid'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -132,12 +132,11 @@ latex_elements = {
     # 'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
-
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
+    'preamble': '\\usepackage[utf8]{inputenc}',
+    'babel': '\\usepackage[russian]{babel}',
+    'cmappkg': '\\usepackage{cmap}',
+    'fontenc': '\usepackage[T1,T2A]{fontenc}',
+    'utf8extra': '\\DeclareUnicodeCharacter{00A0}{\\nobreakspace}'
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
