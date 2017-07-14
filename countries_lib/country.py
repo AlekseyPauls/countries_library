@@ -6,13 +6,14 @@ import difflib
 DB_PATH = 'C:\python3\Lib\site-packages\countries_lib\countries_db'
 
 
-def match_country_name(key, value, priority='2'):
+def match_country_name(key, value, priority=2):
     """ Добавление страны. Аргументы: key - ариант названия страны (строка), value - общее название страны (строка),
-    priority (строка с цифрой или целое число 1 или 2) - приоритет варианта при нормализации ('1' - высокий
+    priority (целое число, 1 или 2) - приоритет варианта при нормализации ('1' - высокий
     (название страны, перевод, сокращение), '2' - низкий (столица, регион, и т.д.) """
 
-    with shelve.open(DB_PATH) as countries_db:
-        countries_db[key.lower()] = str(priority) + value
+    if type(key) is str and type(value) is str and type(priority) is int and (priority == 1 or priority == 2):
+        with shelve.open(DB_PATH) as countries_db:
+            countries_db[key.lower()] = str(priority) + value
     return None
 
 
@@ -20,8 +21,10 @@ def del_country_name(key):
     """ Удаление варианта названия страны. Аргумент: key - удаляемый вариант названия страны. 
     Возращаемое значение: нет """
 
-    with shelve.open(DB_PATH) as countries_db:
-        del countries_db[key.lower()]
+    if type(key) is str:
+        with shelve.open(DB_PATH) as countries_db:
+            if key.lower() in countries_db.keys():
+                del countries_db[key.lower()]
     return None
 
 
@@ -30,6 +33,8 @@ def normalize_country_name(posname, dif_acc=0.7):
     (строка), dif_acc - параметр точности (вещественное число от 0 до 1, по умолчанию 0.7). 
     Возвращаемое значение: общее название страны (строка), если не найдено - 'None' (строка) """
 
+    if type(posname) is not str or type(dif_acc) is not float or dif_acc <= 0.0 or dif_acc >= 1.0:
+        return None
     with shelve.open(DB_PATH) as countries_db:
         try:
             posname = str(posname).lower()
@@ -56,14 +61,24 @@ def normalize_country_name(posname, dif_acc=0.7):
             # Делим входную строку на слова, разделитель - пробел
             parts = posname.split(" ")
             for part in parts:
-                # Ищем совпадение части строки и значения с приоритетом '1'
+                # Ищем равное по количеству букв совпадение части строки и значения с приоритетом '1'
                 part_1 = difflib.get_close_matches(part, countries_db.keys(), n=1, cutoff=dif_acc)
-                if part_1 != [] and countries_db[part_1[0]][0] == '1' and len(part) - len(part_1[0]) <= 1:
+                if part_1 != [] and countries_db[part_1[0]][0] == '1' and len(part) == len(part_1[0]):
                     return countries_db[part_1[0]][1:]
             for part in parts:
-                # Теперь ищем совпадение части строки и значения с приоритетом '2'
+                # Ищем неравное по количеству букв совпадение части строки и значения с приоритетом '1'
+                part_1 = difflib.get_close_matches(part, countries_db.keys(), n=1, cutoff=dif_acc)
+                if part_1 != [] and countries_db[part_1[0]][0] == '1':
+                    return countries_db[part_1[0]][1:]
+            for part in parts:
+                # Ищем равное по количеству букв совпадение части строки и значения с приоритетом '2'
                 part_2 = difflib.get_close_matches(part, countries_db.keys(), n=1, cutoff=dif_acc)
-                if part_2 != [] and countries_db[part_2[0]][0] == '2' and len(part) - len(part_2[0]) <= 1:
+                if part_2 != [] and countries_db[part_2[0]][0] == '2' and len(part) == len(part_2[0]):
+                    return countries_db[part_2[0]][1:]
+            for part in parts:
+                # Ищем неравное по количеству букв совпадение части строки и значения с приоритетом '2'
+                part_2 = difflib.get_close_matches(part, countries_db.keys(), n=1, cutoff=dif_acc)
+                if part_2 != [] and countries_db[part_2[0]][0] == '2':
                     return countries_db[part_2[0]][1:]
             return 'None'
         except LookupError:
