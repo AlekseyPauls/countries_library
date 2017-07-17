@@ -1,4 +1,6 @@
-﻿
+﻿.. meta::
+   :http-equiv=Content-Type: text/html; charset=utf-8
+
 .. _my-reference-label:
 
 ============================================
@@ -11,6 +13,5 @@
    :maxdepth: 2
 
    intro
-   libraries
    functions
 

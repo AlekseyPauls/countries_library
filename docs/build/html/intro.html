@@ -24,6 +24,7 @@
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Функции" href="functions.html" />
     <link rel="prev" title="Нормализация названия страны - countries_lib" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -68,7 +69,7 @@
 </div>
 <div class="section" id="id4">
 <h2>База данных<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
-<p>Эта база данных (б/д) создавалась на основе следующих б/д: <a class="reference external" href="https://github.com/mledoze/countries">https://github.com/mledoze/countries</a> и <a class="reference external" href="https://github.com/x88/i18nGeoNamesDB">https://github.com/x88/i18nGeoNamesDB</a>, распространяемых с лицензией MIT. Она организована в виде словаря - каждому «ключу» (возможному названию) соответствует «значене» (корректное название страны). Это упрощает поиск, добавление и удаление эдементов. Данная бд реализована с помощью модуля shelve стандартной библиотеки языка Python. В базе содержится более 9700 возможных вариантов названий стран.
+<p>Эта база данных (б/д) создавалась на основе следующих б/д: <a class="reference external" href="https://github.com/mledoze/countries">https://github.com/mledoze/countries</a> и <a class="reference external" href="https://github.com/x88/i18nGeoNamesDB">https://github.com/x88/i18nGeoNamesDB</a>, распространяемых с лицензией MIT. Она организована в виде словаря - каждому «ключу» (возможному названию) соответствует «значене» (корректное название страны). Это упрощает поиск, добавление и удаление эдементов. Данная бд реализована с помощью модуля <strong>shelve</strong> стандартной библиотеки языка Python. В базе содержится более 9700 возможных вариантов названий стран.
 Для каждого ключа определяется приоритет: целое число 1 или 2, и записывается перед ключем. Приоритет 1 означает, что ключ является названием или индексом страны, приоритету 2 соответствуют названия столиц и регионов. Также, все ключи приводятся к нижнему регистру. Поэтому запись в б/д имеет вид: ключ - «1some name», значение - «Correct Name». Подробнее об этом в описании функции нормализации.</p>
 </div>
 </div>
@@ -86,6 +87,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id4">База данных</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Функции</a></li>
 </ul>
 
 <div class="relations">
@@ -93,6 +95,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="предыдущая глава">Нормализация названия страны - countries_lib</a></li>
+      <li>Next: <a href="functions.html" title="следующая глава">Функции</a></li>
   </ul></li>
 </ul>
 </div>
