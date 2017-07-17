@@ -1,0 +1,122 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Функции &#8212; Документация countries_lib 1.0</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="Описание" href="intro.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>Функции<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="normalize-country-name">
+<h2>Нормализцая страны - normalize_country_name<a class="headerlink" href="#normalize-country-name" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>normalize_country_name(posname, dif_acc=0.7)</strong></p>
+<p>Принимает на вход один обязательный параметр <strong>posname</strong> (от «possible name») типа <strong>string</strong> - нормализуемое название, и один необязательный - <strong>dif_acc</strong> (от differency accurate) типа <strong>float</strong> - параметр точности при поиске подходящего ключа в библиотеке, принимающий значения от 0.0 до 1.0 (по умолчанию - 0.7).</p>
+<p>В функции преобразуется входная строка и находится ближайший по расстоянию между строками ключ (<strong>dif_acc</strong> определяет минимальное расстояние, при котором строки считаются похожими). Для этого предпринимаются следующие шаги:</p>
+<ol class="arabic">
+<li><p class="first">Удаление пунктуации:</p>
+<blockquote>
+<div><p>Из входной строки <strong>posname</strong> удаляются символы, обозначающие пунктуацию, не используемые в названиях стран. Для реализации используется список символов пунктуации, чтобы избежать конфликтов с национальными символами для различных языков. Иной возможный способ реализации - регулярное выражение.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Поиск совпадения всей строки и значения с приоритетом:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>«1»:</dt>
+<dd>С помощью функции <strong>get_close_matches</strong> из модуля <strong>difflib</strong> стандартной библиотеки языка Python находим для строки <strong>posname</strong>  ближайший по расстоянию между строками ключ из нашей базы данных. При этом проверяем разность.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>«2»:</dt>
+<dd>Аналогично</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Навигация</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Описание</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Функции</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#normalize-country-name">Нормализцая страны - normalize_country_name</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="intro.html" title="предыдущая глава">Описание</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Aleksey Pauls.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

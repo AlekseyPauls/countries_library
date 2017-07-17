@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # countries_lib documentation build configuration file, created by
@@ -84,7 +83,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
+
 html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -105,11 +104,8 @@ html_static_path = ['_static']
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
 html_sidebars = {
     '**': [
-        'about.html',
         'navigation.html',
         'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-        'donate.html',
     ]
 }
 
@@ -117,7 +113,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'countries_libdoc'
+htmlhelp_basename = 'countries_lib.doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
