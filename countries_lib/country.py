@@ -1,13 +1,13 @@
 import shelve
 import difflib
+from os import path
 
 
-# Путь до базы данных. Имя файла прописать без расширения
-DB_PATH = 'C:\python3\Lib\site-packages\countries_lib\countries_db'
+DB_PATH = path.join(path.split(path.abspath(__file__))[0], 'database', 'countries_db')
 
 
 def match_country_name(key, value, priority=2):
-    """ Добавление страны. Аргументы: key - ариант названия страны (строка), value - общее название страны (строка),
+    """ Добавление страны. Аргументы: key - вариант названия страны (строка), value - общее название страны (строка),
     priority (целое число, 1 или 2) - приоритет варианта при нормализации ('1' - высокий
     (название страны, перевод, сокращение), '2' - низкий (столица, регион, и т.д.) """
 
