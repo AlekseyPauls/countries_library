@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import shelve
 import difflib
 from os import path
@@ -12,9 +13,16 @@ def match_country_name(key, value, priority=2):
     (название страны, перевод, сокращение), '2' - низкий (столица, регион, и т.д.) """
 
     if type(key) is str and type(value) is str and type(priority) is int and (priority == 1 or priority == 2):
-        with shelve.open(DB_PATH) as countries_db:
-            countries_db[key.lower()] = str(priority) + value
-    return None
+        try:
+            with shelve.open(DB_PATH, 'w') as countries_db:
+                countries_db[key.lower()] = str(priority) + value
+            return None
+        # Здесь и далее. На всякий случай перехватывается Exception. Не смотря на то,
+        # что ошибка здесь может быть только в отсутствии корректной базы данных
+        except Exception:
+            'DatabaseError'
+    else:
+        return 'Invalid argument type'
 
 
 def del_country_name(key):
@@ -22,10 +30,15 @@ def del_country_name(key):
     Возращаемое значение: нет """
 
     if type(key) is str:
-        with shelve.open(DB_PATH) as countries_db:
-            if key.lower() in countries_db.keys():
-                del countries_db[key.lower()]
-    return None
+        try:
+            with shelve.open(DB_PATH, 'w') as countries_db:
+                if key.lower() in countries_db.keys():
+                    del countries_db[key.lower()]
+            return None
+        except Exception:
+            'DatabaseError'
+    else:
+        return 'Invalid argument type'
 
 
 def normalize_country_name(posname, dif_acc=0.7):
@@ -34,9 +47,9 @@ def normalize_country_name(posname, dif_acc=0.7):
     Возвращаемое значение: общее название страны (строка), если не найдено - 'None' (строка) """
 
     if type(posname) is not str or type(dif_acc) is not float or dif_acc <= 0.0 or dif_acc >= 1.0:
-        return None
-    with shelve.open(DB_PATH) as countries_db:
-        try:
+        return 'Invalid argument type'
+    try:
+        with shelve.open(DB_PATH, 'w') as countries_db:
             posname = str(posname).lower()
             # Очищаем входную строку от знаков препинания, которые не встречаются в названиях стран
             # Данный способ безопаснее, чем регулярные выражения и применение некоторых стандартных функций,
@@ -81,5 +94,7 @@ def normalize_country_name(posname, dif_acc=0.7):
                 if part_2 != [] and countries_db[part_2[0]][0] == '2':
                     return countries_db[part_2[0]][1:]
             return 'None'
-        except LookupError:
-            return 'None'
+    # На всякий случай перехватывается Exception. Не смотря на то,
+    # что ошибка здесь может быть только в отсутствии корректной базы данных
+    except Exception:
+            return 'DatabaseError'
