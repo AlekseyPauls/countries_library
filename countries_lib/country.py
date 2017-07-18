@@ -61,7 +61,7 @@ def normalize_country_name(posname, dif_acc=0.7):
                 posname = posname.replace(symb, '')
 
             # Сначала ищем совпадение всей строки и значения с приоритетом '1'
-            # Проверка на длину - чтобы исключить варианты, когда совпало только начало строки
+            # Проверка на длину - чтобы исключить варианты, когда совпало только начало или другая часть строки
             posname_1 = difflib.get_close_matches(posname, countries_db.keys(), n=1, cutoff=dif_acc)
             if posname_1 != [] and countries_db[posname_1[0]][0] == '1' and \
                     len(posname) - len(posname_1[0]) <= 1:

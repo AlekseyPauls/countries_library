@@ -41,50 +41,50 @@ class NormalizeCountryNameTestCase(unittest.TestCase):
         self.assertEqual(normalize_country_name('Russia', 0.9), 'Russia')
 
     def test_incorrect_accuracy_type(self):
-        self.assertEqual(normalize_country_name('Russia', '0.7'), None)
-        self.assertEqual(normalize_country_name('Russia', []), None)
+        self.assertEqual(normalize_country_name('Russia', '0.7'), 'Invalid argument type')
+        self.assertEqual(normalize_country_name('Russia', []), 'Invalid argument type')
 
     def test_incorrect_accuracy_value(self):
-        self.assertEqual(normalize_country_name('Russia', 3.0), None)
-        self.assertEqual(normalize_country_name('Russia', -0.5), None)
+        self.assertEqual(normalize_country_name('Russia', 3.0), 'Invalid argument type')
+        self.assertEqual(normalize_country_name('Russia', -0.5), 'Invalid argument type')
 
 
 class MatchAndDelCountryNameTestCase(unittest.TestCase):
 
     def test_non_existing_object_delete(self):
-            del_country_name('SpecialCountryNameForTest')
-            self.assertEqual(normalize_country_name('SpecialCountryNameForTest'), 'None')
+            del_country_name('SpecialNameForTest')
+            self.assertEqual(normalize_country_name('SpecialNameForTest'), 'None')
 
     def test_match(self):
-            match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest')
-            self.assertEqual(normalize_country_name('SpecialCountryNameForTest'), 'SpecialCountryNameForTest')
+            match_country_name('SpecialNameForTest', 'SpecialNameForTest')
+            self.assertEqual(normalize_country_name('SpecialNameForTest'), 'SpecialNameForTest')
 
     def test_existing_object_delete(self):
-            del_country_name('SpecialCountryNameForTest')
-            self.assertEqual(normalize_country_name('SpecialCountryNameForTest'), 'None')
+            del_country_name('SpecialNameForTest')
+            self.assertEqual(normalize_country_name('SpecialNameForTest'), 'None')
 
     def test_correct_priority_match(self):
-            match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest', 1)
-            self.assertEqual(normalize_country_name('SpecialCountryNameForTest'), 'SpecialCountryNameForTest')
-            del_country_name('SpecialCountryNameForTest')
+            match_country_name('SpecialNameForTest', 'SpecialNameForTest', 1)
+            self.assertEqual(normalize_country_name('SpecialNameForTest'), 'SpecialNameForTest')
+            del_country_name('SpecialNameForTest')
 
     def test_incorrect_priority_match(self):
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest', 3), None)
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest', -5), None)
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest', 1.2), None)
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest', '1'), None)
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', 'SpecialCountryNameForTest', []), None)
+        self.assertEqual(match_country_name('SpecialNameForTest', 'SpecialNameForTest', 3), 'Invalid argument type')
+        self.assertEqual(match_country_name('SpecialNameForTest', 'SpecialNameForTest', -5), 'Invalid argument type')
+        self.assertEqual(match_country_name('SpecialNameForTest', 'SpecialNameForTest', 1.2), 'Invalid argument type')
+        self.assertEqual(match_country_name('SpecialNameForTest', 'SpecialNameForTest', '1'), 'Invalid argument type')
+        self.assertEqual(match_country_name('SpecialNameForTest', 'SpecialNameForTest', []), 'Invalid argument type')
 
     def test_incorrect_match(self):
-        self.assertEqual(match_country_name(1, 'SpecialCountryNameForTest'), None)
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', 1), None)
-        self.assertEqual(match_country_name([], 'SpecialCountryNameForTest'), None)
-        self.assertEqual(match_country_name('SpecialCountryNameForTest', []), None)
+        self.assertEqual(match_country_name(1, 'SpecialNameForTest'), 'Invalid argument type')
+        self.assertEqual(match_country_name('SpecialNameForTest', 1), 'Invalid argument type')
+        self.assertEqual(match_country_name([], 'SpecialNameForTest'), 'Invalid argument type')
+        self.assertEqual(match_country_name('SpecialNameForTest', []), 'Invalid argument type')
 
     def test_incorrect_delete(self):
-        self.assertEqual(del_country_name(1), None)
-        self.assertEqual(del_country_name(1.5), None)
-        self.assertEqual(del_country_name([]), None)
+        self.assertEqual(del_country_name(1), 'Invalid argument type')
+        self.assertEqual(del_country_name(1.5), 'Invalid argument type')
+        self.assertEqual(del_country_name([]), 'Invalid argument type')
 
 
 if __name__ == '__main__':
