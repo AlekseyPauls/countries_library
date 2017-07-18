@@ -1,1 +1,2 @@
 recursive-include countries_lib\database\ countries_db.*
+recursive-include countries_lib\documentation\ *

@@ -12,7 +12,7 @@
 .. toctree::
    :maxdepth: 2
 
-   intro
+   description
    functions
    using
 

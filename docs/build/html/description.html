@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Описание &#8212; Документация countries_lib 1.0</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Функции" href="functions.html" />
+    <link rel="prev" title="Нормализация названия страны - countries_lib" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>Описание<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="id2">
+<h2>Основные возможности<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Данный пакет предназначен для нормализации (нахождения корректного) названия страны посредством работы с прилагающейся простейшей базой данных.</p>
+<p>На данный момент пакет поддерживает следующие операции:</p>
+<ul class="simple">
+<li>Нормализация названия страны</li>
+<li>Добавление в базу данных новой пары «возможное название»-«корректное название»</li>
+<li>Удаление из базы данных возможного названия</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>Подробнее о нормализации<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>На вход принимаются:</p>
+<ul class="simple">
+<li>Название страны (официальное, общее, полное или национальное, на любом из 9 (в среднем, зависит от страны) популярных языков (deu, eng, fra, hrv, ita, jpn, nld, rus, spa) )</li>
+<li>Альтернативное название страны (транслит, неофициальное, сокращенное)</li>
+<li>2-х или 3-х буквенный код страны</li>
+<li>Название столицы страны</li>
+<li>Название региона страны (поддерживается до 14 (в зависимости от страны) переводов для 3700 регионов)</li>
+<li>Объединения приведенных выше вариантов с различными знаками препинания (например, «London, UK»)</li>
+<li>«Странные» варианты, которые сложно классифицировать (добавляются в базу вручную)</li>
+<li>А также все выше приведенные варианты с опечатками и в любом регистре</li>
+</ul>
+<p>В результате обработки и поиска по базе данных получаем корректное (по умолчанию - общее) название страны.</p>
+</div>
+<div class="section" id="id4">
+<h2>База данных<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Эта база данных (б/д) создавалась на основе следующих б/д: <a class="reference external" href="https://github.com/mledoze/countries">https://github.com/mledoze/countries</a> и <a class="reference external" href="https://github.com/x88/i18nGeoNamesDB">https://github.com/x88/i18nGeoNamesDB</a>, распространяемых с лицензиями
+ODL и MIT соответственно. Она организована в виде словаря - каждому «ключу» (возможному названию) соответствует «значение» (корректное название страны). Это упрощает поиск,
+добавление и удаление элементов. Данная бд реализована с помощью модуля <strong>shelve</strong> стандартной библиотеки языка Python. В базе содержится более 9700 возможных вариантов
+названий стран. Для каждого ключа определяется приоритет: целое число <strong>1</strong> или <strong>2</strong>, и записывается перед значением. Приоритет <strong>1</strong> означает, что ключ является
+названием, сокращением, индексом или переводом названия страны, приоритету <strong>2</strong> соответствуют все оставшиеся варианты названия. Также, все ключи приводятся к нижнему
+регистру, а приоритет записывается вместе со значением. Поэтому запись в б/д имеет вид: ключ - «some name», значение - «1Correct Name». Подробнее об этом в описании
+функции нормализации.</p>
+</div>
+<div class="section" id="id5">
+<h2>Тесты<a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В пакет встроены тесты, позволяющие проверить его функциональность при внесении изменений. Далее идут тесты и их описание:</p>
+<ol class="arabic simple">
+<li>test_simple_name - проверяет работу функции <strong>normalize_country_name</strong> на простых входных данных</li>
+<li>test_punctuation_sensitivity - проверяет удаление пунктуации в функции <strong>normalize_country_name</strong></li>
+<li>test_upper_register - проверяет работу функции <strong>normalize_country_name</strong> на входной строке в верхнем регистре</li>
+<li>test_low_register - проверяет работу функции <strong>normalize_country_name</strong> на входной строке в нижнем регистре</li>
+<li>test_missed_letter - проверяет исправление опечатки типа «пропущенная буква» в функции <strong>normalize_country_name</strong></li>
+<li>test_excess_letter - проверяет исправление опечатки типа «лишняя буква» в функции <strong>normalize_country_name</strong></li>
+<li>test_another_letter - проверяет исправление опечатки типа «неправильная буква» в функции <strong>normalize_country_name</strong></li>
+<li>test_simple_two_words_name - проверяет работу функции <strong>normalize_country_name</strong> с входной строкой из 2-х слов (разделитель - пробел)</li>
+<li>test_excess_word_name - проверяет работу функции <strong>normalize_country_name</strong> с входной строкой из 2-х слов, одно из которых - лишнее</li>
+<li>test_american_paris_like_construction - проверяет работу приоритета в функции <strong>normalize_country_name</strong></li>
+<li>test_standard_accuracy_result - проверяет вывод функции <strong>normalize_country_name</strong> для несуществующего имени при стандартной точности</li>
+<li>test_correct_accuracy_type - проверяет ввозможность ввода корректного необязательного аргумента <strong>dif_acc</strong> в функции <strong>normalize_country_name</strong></li>
+<li>test_incorrect_accuracy_type - проверяет ввозможность ввода некорректного (тип) необязательного аргумента <strong>dif_acc</strong> в функции <strong>normalize_country_name</strong></li>
+<li>test_incorrect_accuracy_value - проверяет ввозможность ввода некорректного (значение) необязательного аргумента <strong>dif_acc</strong> в функции <strong>normalize_country_name</strong></li>
+<li>test_non_existing_object_delete - проверяет удаление несуществующего ключа в функции <strong>del_country_name</strong></li>
+<li>test_match - проверяет добавление нового ключа и значения в функции <strong>match_country_name</strong></li>
+<li>test_existing_object_delete - проверяет удаление существующего ключа в функции <strong>del_country_name</strong></li>
+<li>test_correct_priority_match - проверяет добавление нового ключа и значения в функции <strong>match_country_name</strong>, причем необязательный аргумент <strong>priority</strong> корректен</li>
+<li>test_incorrect_priority_match - проверяет добавление нового ключа и значения в функции <strong>match_country_name</strong>, причем необязательный аргумент <strong>priority</strong> некорректен</li>
+<li>test_incorrect_match - проверяет добавление некорректного нового ключа и некорректного значения в функции <strong>match_country_name</strong></li>
+<li>test_incorrect_delete - проверяет удаление некорректного ключа в функции <strong>del_country_name</strong></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Навигация</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Описание</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Основные возможности</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Подробнее о нормализации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">База данных</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Тесты</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Функции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using.html">Применение</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="предыдущая глава">Нормализация названия страны - countries_lib</a></li>
+      <li>Next: <a href="functions.html" title="следующая глава">Функции</a></li>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/description.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
