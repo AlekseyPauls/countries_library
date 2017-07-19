@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-from countries_lib.country import normalize_country_name, match_country_name, del_country_name
+from country import normalize_country_name, match_country_name, del_country_name
 
 
 class NormalizeCountryNameTestCase(unittest.TestCase):
