@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+    <title>countries_lib 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://countries-library.readthedocs.io/en/latest/" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'index'
+</script>
+
+<script type="text/javascript" src="_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="countries-lib">
+<span id="my-reference-label"></span><h1>Нормализация названия страны - countries_lib<a class="headerlink" href="#countries-lib" title="Permalink to this headline">¶</a></h1>
+<p>В этом руководстве описывается назначение данного python-пакета, логика его работы и применение.</p>
+<div class="toctree-wrapper compound">
+<span id="document-description"></span><div class="section" id="id1">
+<h2>Описание<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Основные возможности<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Данный пакет предназначен для нормализации (нахождения корректного) названия страны посредством работы с прилагающейся простейшей базой данных.</p>
+<p>На данный момент пакет поддерживает следующие операции:</p>
+<ul class="simple">
+<li>Нормализация названия страны</li>
+<li>Добавление в базу данных новой пары &#8220;возможное название&#8221;-&#8220;корректное название&#8221;</li>
+<li>Удаление из базы данных возможного названия</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>Подробнее о нормализации<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>На вход принимаются:</p>
+<ul class="simple">
+<li>Название страны (официальное, общее, полное или национальное, на любом из 9 (в среднем, зависит от страны) популярных языков (deu, eng, fra, hrv, ita, jpn, nld, rus, spa) )</li>
+<li>Альтернативное название страны (транслит, неофициальное, сокращенное)</li>
+<li>2-х или 3-х буквенный код страны</li>
+<li>Название столицы страны</li>
+<li>Название региона страны (поддерживается до 14 (в зависимости от страны) переводов для 3700 регионов)</li>
+<li>Объединения приведенных выше вариантов с различными знаками препинания (например, &#8220;London, UK&#8221;)</li>
+<li>&#8220;Странные&#8221; варианты, которые сложно классифицировать (добавляются в базу вручную)</li>
+<li>А также все выше приведенные варианты с опечатками и в любом регистре</li>
+</ul>
+<p>В результате обработки и поиска по базе данных получаем корректное (по умолчанию - общее) название страны.</p>
+</div>
+<div class="section" id="id4">
+<h3>База данных<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Эта база данных (б/д) создавалась на основе следующих б/д: <a class="reference external" href="https://github.com/mledoze/countries">https://github.com/mledoze/countries</a> и <a class="reference external" href="https://github.com/x88/i18nGeoNamesDB">https://github.com/x88/i18nGeoNamesDB</a>, распространяемых с лицензиями
+ODL и MIT соответственно. Она организована в виде словаря - каждому &#8220;ключу&#8221; (возможному названию) соответствует &#8220;значение&#8221; (корректное название страны). Это упрощает поиск,
+добавление и удаление элементов. Данная бд реализована с помощью модуля <strong>shelve</strong> стандартной библиотеки языка Python. В базе содержится более 9700 возможных вариантов
+названий стран. Для каждого ключа определяется приоритет: целое число <strong>1</strong> или <strong>2</strong>, и записывается перед значением. Приоритет <strong>1</strong> означает, что ключ является
+названием, сокращением, индексом или переводом названия страны, приоритету <strong>2</strong> соответствуют все оставшиеся варианты названия. Также, все ключи приводятся к нижнему
+регистру, а приоритет записывается вместе со значением. Поэтому запись в б/д имеет вид: ключ - &#8220;some name&#8221;, значение - &#8220;1Correct Name&#8221;. Подробнее об этом в описании
+функции нормализации.</p>
+</div>
+<div class="section" id="id5">
+<h3>Тесты<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>В пакет встроены тесты, позволяющие проверить его функциональность при внесении изменений. Далее идут тесты и их описание:</p>
+<ol class="arabic simple">
+<li>test_simple_name - проверяет работу функции <strong>normalize_country_name</strong> на простых входных данных</li>
+<li>test_punctuation_sensitivity - проверяет удаление пунктуации в функции <strong>normalize_country_name</strong></li>
+<li>test_upper_register - проверяет работу функции <strong>normalize_country_name</strong> на входной строке в верхнем регистре</li>
+<li>test_low_register - проверяет работу функции <strong>normalize_country_name</strong> на входной строке в нижнем регистре</li>
+<li>test_missed_letter - проверяет исправление опечатки типа &#8220;пропущенная буква&#8221; в функции <strong>normalize_country_name</strong></li>
+<li>test_excess_letter - проверяет исправление опечатки типа &#8220;лишняя буква&#8221; в функции <strong>normalize_country_name</strong></li>
+<li>test_another_letter - проверяет исправление опечатки типа &#8220;неправильная буква&#8221; в функции <strong>normalize_country_name</strong></li>
+<li>test_simple_two_words_name - проверяет работу функции <strong>normalize_country_name</strong> с входной строкой из 2-х слов (разделитель - пробел)</li>
+<li>test_excess_word_name - проверяет работу функции <strong>normalize_country_name</strong> с входной строкой из 2-х слов, одно из которых - лишнее</li>
+<li>test_american_paris_like_construction - проверяет работу приоритета в функции <strong>normalize_country_name</strong></li>
+<li>test_standard_accuracy_result - проверяет вывод функции <strong>normalize_country_name</strong> для несуществующего имени при стандартной точности</li>
+<li>test_correct_accuracy_type - проверяет ввозможность ввода корректного необязательного аргумента <strong>dif_acc</strong> в функции <strong>normalize_country_name</strong></li>
+<li>test_incorrect_accuracy_type - проверяет ввозможность ввода некорректного (тип) необязательного аргумента <strong>dif_acc</strong> в функции <strong>normalize_country_name</strong></li>
+<li>test_incorrect_accuracy_value - проверяет ввозможность ввода некорректного (значение) необязательного аргумента <strong>dif_acc</strong> в функции <strong>normalize_country_name</strong></li>
+<li>test_non_existing_object_delete - проверяет удаление несуществующего ключа в функции <strong>del_country_name</strong></li>
+<li>test_match - проверяет добавление нового ключа и значения в функции <strong>match_country_name</strong></li>
+<li>test_existing_object_delete - проверяет удаление существующего ключа в функции <strong>del_country_name</strong></li>
+<li>test_correct_priority_match - проверяет добавление нового ключа и значения в функции <strong>match_country_name</strong>, причем необязательный аргумент <strong>priority</strong> корректен</li>
+<li>test_incorrect_priority_match - проверяет добавление нового ключа и значения в функции <strong>match_country_name</strong>, причем необязательный аргумент <strong>priority</strong> некорректен</li>
+<li>test_incorrect_match - проверяет добавление некорректного нового ключа и некорректного значения в функции <strong>match_country_name</strong></li>
+<li>test_incorrect_delete - проверяет удаление некорректного ключа в функции <strong>del_country_name</strong></li>
+</ol>
+</div>
+</div>
+<span id="document-functions"></span><div class="section" id="id1">
+<h2>Функции<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="normalize-country-name">
+<h3>Нормализация страны - normalize_country_name<a class="headerlink" href="#normalize-country-name" title="Permalink to this headline">¶</a></h3>
+<p><strong>Аргументы и возвращаемое значение</strong></p>
+<p>Функция имеет вид: <strong>normalize_country_name(posname, dif_acc=0.7)</strong></p>
+<p>Принимает на вход один обязательный аргумент <strong>posname</strong> (от &#8220;possible name&#8221;) типа <strong>string</strong> - нормализуемое название, и один необязательный - <strong>dif_acc</strong>
+(от difference accuracy) типа <strong>float</strong> - параметр точности при поиске подходящего ключа в библиотеке, принимающий значения от <strong>0.0</strong> до <strong>1.0</strong> (по умолчанию - <strong>0.7</strong>).</p>
+<p>Выдает строку типа <strong>string</strong>, содержащую либо общее название страны, либо <strong>&#8216;None&#8217;</strong>, если выполнение прошло успешно. Если было вызвано исключение, то строка содержит
+<strong>&#8216;DatabaseError&#8217;</strong> (это означает, что не найдена корректная база данных по пути из переменной <strong>DB_PATH</strong>) или <strong>&#8216;Invalid argument type&#8217;</strong>, если хотя бы один из
+аргументов задан неправильно (имеет некорректный тип или значение).</p>
+<p><strong>Логика работы</strong></p>
+<p>В функции преобразуется входная строка <strong>posname</strong> и находится ближайший по расстоянию между строками ключ (<strong>dif_acc</strong> определяет минимальное расстояние,
+при котором строки считаются похожими). Для этого предпринимаются следующие шаги:</p>
+<ol class="arabic">
+<li><p class="first">Удаление пунктуации и приведение к нижнему регистру:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Из входной строки <strong>posname</strong> удаляются символы, обозначающие пунктуацию и не используемые в названиях стран. Для реализации используется список символов</dt>
+<dd><p class="first last">пунктуации, чтобы избежать конфликтов с национальными символами для различных языков. Иной возможный способ реализации - регулярное выражение.
+Также <strong>posname</strong> приводится к нижнему регистру, что позволяет сравнивать его с ключами (которые все записаны в нижнем регистре).
+Таким образом достигается нечувствительность к регистру входной строки.</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">Поиск совпадения всей строки:</p>
+<blockquote>
+<div><p>2.1. И ключа с приоритетом &#8220;1&#8221;:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>С помощью функции <strong>get_close_matches</strong> из модуля <strong>difflib</strong> стандартной библиотеки языка Python находим для строки <strong>posname</strong> ближайший по расстоянию</dt>
+<dd><p class="first last">между строками ключ с приоритетом <strong>1</strong> из нашей базы данных. При этом проверяем разность длин совпавшего ключа и входной строки. Если эта разность по модулю
+не больше 1, то есть длины примерно равны, то значение по полученному ключу возвращается функцией и ее работа завершается.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>2.2. И ключа с приоритетом &#8220;2&#8221;:</p>
+<blockquote>
+<div><p>Аналогично, различие только в приоритете.</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">Разбиение входной строки на слова (разделитель - &#8216; &#8216;(пробел))</p>
+</li>
+<li><p class="first">Поиск совпадения слов из входной строки:</p>
+<blockquote>
+<div><p>4.1. И ключа с приоритетом &#8220;1&#8221;. При этом:</p>
+<blockquote>
+<div><p>4.1.1. Длины ключа и слова примерно равны</p>
+<blockquote>
+<div><p>Если найден такой ключ, то функция возвращает значение по этому ключу и завершает работу. Если нет, то выполнение продолжается по указанному порядку.</p>
+</div></blockquote>
+<p>4.1.2. Длины ключа и слова не равны</p>
+<blockquote>
+<div><p>Аналогично пункту 4.1.1, но без сравнения длины строк.</p>
+</div></blockquote>
+</div></blockquote>
+<p>4.2. И ключа с приоритетом &#8220;2&#8221;. При этом:</p>
+<blockquote>
+<div><p>4.2.1. Длины ключа и слова примерно равны</p>
+<blockquote>
+<div><p>Аналогично 4.1.1, разница в приоритете ключей.</p>
+</div></blockquote>
+<p>4.2.2. Длины ключа и слова не равны</p>
+<blockquote>
+<div><p>Аналогично 4.1.2, разница в приоритете ключей.</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Завершение работы - совпадения не найдено</dt>
+<dd><dl class="first last docutils">
+<dt>Если функция дошла до этого этапа, значит для входной строки не существует похожего ключа из базы данных, поэтому мы не можем точно сказать,</dt>
+<dd><p class="first last">какая страна имелась в виду, и функция возвращает строку <strong>&#8216;None&#8217;</strong>. Eсли тип переданных аргументов некорректен, функция возвращает строку <strong>&#8216;Invalid argument type&#8217;</strong>.
+Если же в процессе выполнения функции было вызвано исключение, то функция возвращает строку <strong>&#8216;DatabaseError&#8217;</strong> (с огромной вероятностью это означает, что не найдена
+корректная база данных по пути из переменной <strong>DB_PATH</strong>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ol>
+<p>Такая структура позволяет охватить многие возможные опечатки и странные варианты. Например, удаление символов пунктуации и приведение к нижнему регистру позволяет
+корректно определить страну в случаях &#8220;America!!!&#8221; и &#8220;uNITED kINGDOM&#8221;, а приоритет ключей разрешает ситуации типа &#8220;американского Парижа&#8221; - по запросу &#8220;Paris, US&#8221; функция
+вернет &#8220;Unated States&#8221;. Cравнение длины ключа и строки (слова) нужно для того, чтобы сначала исключить варианты, когда совпало только начало или другая часть строки (слова).</p>
+<p>А также, так как значение записывается вместе с приоритетом перед ним в одну строку, то нулевой элемент строки значения не учитывается при возвращении строки. То есть, в
+базе данных по ключу <strong>&#8216;ru&#8217;</strong> лежит значение <strong>&#8216;1Russia&#8217;</strong>, где <strong>1</strong> - приоритет ключа <strong>&#8216;ru&#8217;</strong>, и возвращается только часть строки значения: <strong>&#8216;Russia&#8217;</strong></p>
+</div>
+<div class="section" id="match-country-name">
+<h3>Добавление возможного названия страны - match_country_name<a class="headerlink" href="#match-country-name" title="Permalink to this headline">¶</a></h3>
+<p><strong>Аргументы и возвращаемое значение</strong></p>
+<p>Функция имеет вид: <strong>match_country_name(key, value, priority=2)</strong></p>
+<p>Принимает на вход два обязательных аргумента <strong>key</strong> и <strong>value</strong> типа <strong>string</strong> - возможное и корректное названия соответственно, и один необязательный - <strong>priority</strong>
+типа <strong>int</strong> - приоритет ключа, принимающий значения <strong>1</strong> или <strong>2</strong> (по умолчанию - <strong>2</strong>) и определяющий, что содержится в ключе: название, сокращение, индекс или
+перевод названия страны, если приоритет равен <strong>1</strong>, и все остальное, если приоритет равен <strong>2</strong>. Так как большинство ключей, подходящих под приоритет <strong>1</strong>, уже в базе,
+то возможно задать приоритет по умолчанию равный <strong>2</strong>.</p>
+<p>Выдает строку <strong>&#8216;Invalid argument type&#8217;</strong> типа <strong>string</strong> , если хотя бы один из аргументов задан неправильно (имеет некорректный тип или значение),
+строку <strong>&#8216;DatabaseError&#8217;</strong>, если произошла ошибка во время открытия базы данных по пути из переменной <strong>DB_PATH</strong>, и ничего не возвращает (<strong>None</strong>),
+если добавление прошло успешно.</p>
+<p><strong>Логика работы</strong></p>
+<p>Сначала функция проверяет типы и значения аргументов. Если проверка прошла успешно, то делается попытка открыть базу данных. Если база данных успешно открыта, то ключ
+(<strong>key</strong>, возможное название) приводится к нижнему регистру, значение (<strong>value</strong>, корректное название) объединяется с приоритетом (<strong>priority</strong>) в одну строку, и
+пара ключ-(приоритет+значение) записывается в базу данных. Если ключ уже находится в базе, то его значение перезаписывается.</p>
+</div>
+<div class="section" id="del-country-name">
+<h3>Удаление возможного названия страны - del_country_name<a class="headerlink" href="#del-country-name" title="Permalink to this headline">¶</a></h3>
+<p><strong>Аргументы и возвращаемое значение</strong></p>
+<p>Функция имеет вид: <strong>del_country_name(key)</strong></p>
+<p>Принимает на вход один обязательный аргумент <strong>key</strong> типа <strong>string</strong> - возможное название, которое нужно удалить из базы данных.</p>
+<p>Выдает строку <strong>&#8216;Invalid argument type&#8217;</strong> типа <strong>string</strong> , аргумент задан неправильно (имеет некорректный тип или значение), строку <strong>&#8216;DatabaseError&#8217;</strong>,
+если произошла ошибка во время открытия базы данных по пути из переменной <strong>DB_PATH</strong>, и ничего не возвращает (<strong>None</strong>), если удаление прошло успешно.</p>
+<p><strong>Логика работы</strong></p>
+<p>Сначала функция проверяет типы и значения переменных. Если проверка прошла успешно, то делается попытка открыть базу данных. Если база данных успешно открыта,
+то ключ (<strong>key</strong>, возможное название) приводится к нижнему регистру и проверяется на наличие в базе данных. Если ключ находится в базе, то он и его значение удаляются,
+и функция завершается. Если нет - то выполнение функции завершается сразу.</p>
+</div>
+</div>
+<span id="document-using"></span><div class="section" id="id1">
+<h2>Применение<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Общая демонстрация<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Код, используемый для демонстрации возможностей модуля:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">countries_lib</span> <span class="k">import</span> <span class="n">country</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="sd">&quot;&quot;&quot; Пример использования библиотеки для нормализации названия страны &quot;&quot;&quot;</span>
+
+<span class="c1"># Вывод корректные названия для вариантов из списка:</span>
+<span class="n">test_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span> <span class="s1">&#39;Amurica!!!&#39;</span><span class="p">,</span> <span class="s1">&#39;NewYork&#39;</span><span class="p">,</span> <span class="s1">&#39;Untgd States of America&#39;</span><span class="p">,</span> <span class="s1">&#39;Paris, USA&#39;</span><span class="p">,</span> <span class="s1">&#39;agagagag&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">test_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">variant</span><span class="p">,</span> <span class="s1">&#39; - &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="n">variant</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------------------------------------------&#39;</span><span class="p">)</span>
+<span class="c1"># Добавление значения</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Проверка &quot;AddCountryTest&quot; на существование: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;AddCountryTest&#39;</span><span class="p">))</span>
+<span class="n">country</span><span class="o">.</span><span class="n">match_country_name</span><span class="p">(</span><span class="s1">&#39;AddCountryTest&#39;</span><span class="p">,</span> <span class="s1">&#39;AddCountryTest&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Проверка &quot;AddCountryTest&quot; на существование: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;AddCountryTest&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------------------------------------------&#39;</span><span class="p">)</span>
+<span class="c1"># Удаление значения</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Проверка &quot;AddCountryTest&quot; на существование: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;AddCountryTest&#39;</span><span class="p">))</span>
+<span class="n">country</span><span class="o">.</span><span class="n">del_country_name</span><span class="p">(</span><span class="s1">&#39;AddCountryTest&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Проверка &quot;AddCountryTest&quot; на существование: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;AddCountryTest&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------------------------------------------&#39;</span><span class="p">)</span>
+<span class="c1"># Демонстрация низкой и высокой точности</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing variant: &#39;</span><span class="p">,</span> <span class="s1">&#39;ololo&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;0.3 (low) accurate: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;ololo&#39;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;0.6 (standard) accurate: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;ololo&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;0.9 (high) accurate: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;ololo&#39;</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing variant: &#39;</span><span class="p">,</span> <span class="s1">&#39;Rasia&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;0.3 (low) accurate: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;Rasia&#39;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;0.6 (standard) accurate: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;Rasia&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;0.9 (high) accurate: &#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">.</span><span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;Rasia&#39;</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Вывод при выполнении данного кода:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>USA  -  United States
+US  -  United States
+Amurica!!!  -  United States
+NewYork  -  United States
+Untgd States of America  -  United States
+Paris, USA  -  United States
+agagagag  -  None
+-------------------------------------------------------------
+Проверка &quot;AddCountryTest&quot; на существование:  None
+Проверка &quot;AddCountryTest&quot; на существование:  AddCountryTest
+-------------------------------------------------------------
+Проверка &quot;AddCountryTest&quot; на существование:  AddCountryTest
+Проверка &quot;AddCountryTest&quot; на существование:  None
+-------------------------------------------------------------
+Testing variant:  ololo
+0.3 (low) accurate:  Norway
+0.6 (standard) accurate:  None
+0.9 (high) accurate:  None
+Testing variant:  Rasia
+0.3 (low) accurate:  Russia
+0.6 (standard) accurate:  Russia
+0.9 (high) accurate:  None
+</pre></div>
+</div>
+<p>Как видно из результатов, функции делают именно то, что заявлено в их описании (без учета ошибок, это рассматривается далее).</p>
+<p>Возможна другая форма импорта:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">countries_lib.country</span> <span class="k">import</span> <span class="n">normalize_country_name</span><span class="p">,</span> <span class="n">match_country_name</span><span class="p">,</span> <span class="n">del_country_name</span>
+</pre></div>
+</div>
+<p>Такая форма позволяет обращаться к функциям напрямую.</p>
+</div>
+<div class="section" id="id3">
+<h3>Необязательные аргументы<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>В функциях <strong>normalize_country_name</strong> и <strong>match_country_name</strong> есть необязательные аргументы. Рассмотрим их применение.</p>
+<div class="section" id="dif-acc-normalize-country-name">
+<h4>dif_acc (функция normalize_country_name)<a class="headerlink" href="#dif-acc-normalize-country-name" title="Permalink to this headline">¶</a></h4>
+<p>Параметр точности (коэффициент совпадения строк). Отвечает за минимальное расстояние между строками, при котором они
+считаются похожими. Принимает значения от <strong>0.0</strong> до <strong>1.0</strong> и по умолчанию равен <strong>0.7</strong>. Чем больше данный параметр, тем точнее будет результат - это напрямую
+регулирует исправление опечаток. При низком <strong>dif_acc</strong> даже для сильных опечаток будет найден подходящий вариант, но при этом возможно нахождение подходящего варианта
+для бессмысленной последовательности букв типа &#8220;azazazaz&#8221;. При высоком <strong>dif_acc</strong> уменьшится количество исправляемых опечаток и на очевидные для человека ошибки
+программа будет выдавать, что совпадений не найдено.</p>
+<p>Стоит отметить, что если для заданного возможного имени есть полностью совпадающий ключ, то его значение будет
+возвращено независимо от <strong>dif_acc</strong>, так как расстояние между этими строками будет равно 0 (коэффициент совпадения - 1.0, предельное корректное значение).
+Поэтому <strong>dif_acc</strong> влияет только на исправление опечаток.</p>
+</div>
+<div class="section" id="priority-match-country-name">
+<h4>priority (функция match_country_name)<a class="headerlink" href="#priority-match-country-name" title="Permalink to this headline">¶</a></h4>
+<p>Приоритет ключа, принимающий значения <strong>1</strong> или <strong>2</strong> (по умолчанию - <strong>2</strong>) и определяющий, что содержится в ключе:
+название, сокращение, индекс или перевод названия страны, если приоритет равен <strong>1</strong>, и все остальное, если приоритет равен <strong>2</strong>. Так как большинство ключей,
+подходящих под приоритет <strong>1</strong>, уже в базе, то возможно задать приоритет по умолчанию равный <strong>2</strong>.</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Работа с ошибками<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Пример кода, обрабатывающего функцию <strong>normalize_country_name</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="n">normalize_country_name</span><span class="p">(</span><span class="s1">&#39;Some Name&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Invalid argument type&#39;</span><span class="p">:</span>
+    <span class="c1"># Your code</span>
+<span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;DatabaseError&#39;</span><span class="p">:</span>
+    <span class="c1"># Your code</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Your code</span>
+</pre></div>
+</div>
+<p>Для функций <strong>match_country_name</strong> и <strong>del_country_name</strong> принцип тот же.</p>
+<p>Если Вы уверены в том, что на вход функций подаются корректные аргументы и с базой данных все в порядке, то в обработке ошибок нет необходимости.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-description">Описание</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-functions">Функции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-using">Применение</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html#document-index">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
