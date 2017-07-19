@@ -20,7 +20,7 @@ def match_country_name(key, value, priority=2):
         # Здесь и далее. На всякий случай перехватывается Exception. Не смотря на то,
         # что ошибка здесь может быть только в отсутствии корректной базы данных
         except Exception:
-            'DatabaseError'
+            return 'DatabaseError'
     else:
         return 'Invalid argument type'
 
@@ -36,7 +36,7 @@ def del_country_name(key):
                     del countries_db[key.lower()]
             return None
         except Exception:
-            'DatabaseError'
+            return 'DatabaseError'
     else:
         return 'Invalid argument type'
 
