@@ -113,6 +113,14 @@ def normalize_country_name(posname, dif_acc=0.7):
     except Exception:
             return 'DatabaseError'
 
+def convers():
+    with shelve.open(DB_PATH, 'w') as countries_db, open("csvfile.csv", 'w', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        k = 1
+        writer.writerow(['key', 'value'])
+        for key in countries_db.keys():
+            writer.writerow([k, key, countries_db[key]])
+            k = k + 1
 
-if __name__ == '__main__':
-     
+if __name__ == "__main__":
+    convers()
