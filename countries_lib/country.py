@@ -2,6 +2,7 @@
 import shelve
 import difflib
 from os import path
+import csv
 
 
 DB_PATH = path.join(path.split(path.abspath(__file__))[0], 'database', 'countries_db')
@@ -75,13 +76,13 @@ def normalize_country_name(posname, dif_acc=0.7):
             posname_3 = posname.replace(' ', '')
             posname_3 = difflib.get_close_matches(posname_3, countries_db.keys(), n=1, cutoff=dif_acc)
             if posname_3 != [] and countries_db[posname_3[0]][0] == '1' and \
-                    len(posname.replace(' ', '')) - len(posname_3[0]) <= 1:
+                    len(posname.replace(' ', '')) - len(posname_3[0].replace(' ', '')) <= 1:
                 return countries_db[posname_3[0]][1:]
             # Ищем совпадение всей строки без пробелов и значения с приоритетом '2'
             posname_4 = posname.replace(' ', '')
             posname_4 = difflib.get_close_matches(posname_4, countries_db.keys(), n=1, cutoff=dif_acc)
             if posname_4 != [] and countries_db[posname_4[0]][0] == '2' and \
-                    len(posname.replace(' ', '')) - len(posname_4[0]) <= 1:
+                    len(posname.replace(' ', '')) - len(posname_4[0].replace(' ', '')) <= 1:
                 return countries_db[posname_4[0]][1:]
 
             # Делим входную строку на слова, разделитель - пробел
@@ -112,5 +113,6 @@ def normalize_country_name(posname, dif_acc=0.7):
     except Exception:
             return 'DatabaseError'
 
+
 if __name__ == '__main__':
-    print(normalize_country_name(input()))
+     
