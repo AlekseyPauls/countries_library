@@ -8,4 +8,5 @@ setup(
     include_package_data=True,
     packages=find_packages(),
     test_suite='tests',
+    package_data = {'countries_lib': ['data/*']}
 )
