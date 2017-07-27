@@ -1,8 +1,0 @@
-recursive-include countries_lib\database\ countries_db.*
-recursive-include countries_lib\documentation\ pdf_doc.pdf
-recursive-include countries_lib\documentation\html_doc\ *
-recursive-include countries_lib\ tests.py
-recursive-include countries_lib/database/ countries_db.*
-recursive-include countries_lib/documentation/ pdf_doc.pdf
-recursive-include countries_lib/documentation/html_doc/ *
-recursive-include countries_lib/ tests.py
