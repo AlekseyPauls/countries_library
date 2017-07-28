@@ -8,5 +8,6 @@ setup(
     include_package_data=True,
     packages=find_packages(),
     test_suite='tests',
-    package_data = {'countries_lib': ['database/*', 'documentation/*']}
+    package_data={'countries_lib': ['database/*', 'documentation/*', 'documentation/html_doc/*',
+                                    'documentation/html_doc/_static/*']}
 )
